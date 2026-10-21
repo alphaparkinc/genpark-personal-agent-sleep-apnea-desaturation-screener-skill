@@ -1,0 +1,64 @@
+{
+  "name": "genpark-personal-agent-sleep-apnea-desaturation-screener-skill",
+  "version": "1.0.0",
+  "title": "Nocturnal SpO2 Oxygen Desaturation & ODI Sleep Apnea Screener Skill",
+  "description": "Oxygen Desaturation Index (ODI3/ODI4), SpO2 dip nadir and duration, pulse rate variability nocturnal arousal proxy, and sleep quality index. Built for GenPark (https://www.genpark.ai).",
+  "homepage": "https://www.genpark.ai",
+  "linkedin": "https://www.linkedin.com/company/92955550",
+  "category": "personal-agent",
+  "topics": [
+    "sleep-apnea",
+    "odi-index",
+    "spo2-telemetry",
+    "hypoxemia",
+    "personal-agent",
+    "model-context-protocol",
+    "genpark"
+  ],
+  "tools": [
+    {
+      "name": "calculate_oxygen_desaturation_index",
+      "description": "Compute ODI3 (events/hr with >= 3% SpO2 drop) and lowest nocturnal nadir from pulse oximetry time series.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "spo2_time_series_readings": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "sleep_duration_hours": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "spo2_time_series_readings",
+          "sleep_duration_hours"
+        ]
+      }
+    },
+    {
+      "name": "classify_nocturnal_hypoxemia_severity",
+      "description": "Classify sleep apnea risk tier (Mild, Moderate, Severe) and recommend clinical polysomnography urgency.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "odi_score": {
+            "type": "number"
+          },
+          "lowest_spo2_pct": {
+            "type": "number"
+          },
+          "time_below_90_pct": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "odi_score",
+          "lowest_spo2_pct"
+        ]
+      }
+    }
+  ]
+}
